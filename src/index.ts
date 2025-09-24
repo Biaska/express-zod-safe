@@ -215,3 +215,13 @@ export type ValidatedRequest<T extends CompleteValidationSchema> = Request<
   ZodOutput<T["body"]>,
   ZodOutput<T["query"]>
 >;
+
+/**
+ * A utility type to ensure the RequestHandler is typed correctly.
+ * @template T - The validation schema to be applied to the request params, query and body.
+ */
+export type ValidatedRequestHandler<T extends CompleteValidationSchema> = (
+  req: ValidatedRequest<T>,
+  res: Response,
+  next: NextFunction
+) => void | Promise<void>;

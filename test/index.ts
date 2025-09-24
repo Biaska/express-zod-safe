@@ -6,9 +6,8 @@ import express, {
 } from "express";
 import { z } from "zod";
 import validate, {
-  type CompleteValidationSchema,
-  type ValidatedRequest,
   type WeakRequestHandler,
+  type ValidatedRequestHandler,
 } from "../src/index";
 
 const app = express();
@@ -31,7 +30,7 @@ const schema = {
   params: {
     id: z.coerce.number(),
   },
-} satisfies CompleteValidationSchema;
+};
 
 app.post(
   "/:id",
@@ -50,10 +49,7 @@ app.post(
   }
 );
 
-const requestHandler = (
-  req: ValidatedRequest<typeof schema>,
-  res: Response
-) => {
+const requestHandler: ValidatedRequestHandler<typeof schema> = (req, res) => {
   const { name, age } = req.query;
   const { id } = req.params;
   const { title } = req.body;
